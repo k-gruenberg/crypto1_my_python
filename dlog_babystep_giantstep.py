@@ -14,6 +14,14 @@ def dlog_babystep_giantstep(generator_g, order_n, h):
     sage: dlog_babystep_giantstep(generator_g=Z13.multiplicative_generator(), order_n=12, h=2**17)                                                                                       
     5
 
+    sage: dlog_babystep_giantstep(generator_g=2, order_n=12, h=2**5)                                                                                                                     
+	    N = ceil(sqrt(12)) = 4 where 12 = order_n
+	    Giant Steps: [g^0, g^N, g^2N, ..., g^(N-1)N] = [1, 16, 256, 4096]
+	    Baby Steps: [h, h*g^(-1), h*g^(-2), ..., h*g^(-N+1)] = [32, 16, 8, ..., 4] = [32, 16, 8, 4]
+	    Found collision g^(u*big_N) == h*g^(-v): 2^(1*4) == 16 == 16 == 32*2^(-1)
+	      => x = dlog_g(h) = u*big_N + v = 1*4 + 1 = 5
+    5
+
 	https://de.wikipedia.org/wiki/Babystep-Giantstep-Algorithmus
 	"""
 
