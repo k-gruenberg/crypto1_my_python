@@ -12,7 +12,7 @@ sage: dlog_pollard_rho(g=Z13.multiplicative_generator(), h=Z13.multiplicative_ge
 	f(x_i=7) = x_i*x_i = 7*7 = 10 (u_i*=2, v_i*=2)
 	f(x_i=10) = x_i*x_i = 10*10 = 9 (u_i*=2, v_i*=2)                                                                      
     x_i, u_i, v_i = [(9, 1, 1), (8, 1, 2), (3, 2, 2), (7, 2, 3), (10, 4, 6), (9, 8, 12)]
-    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (1 - 8) / (12 - 1) = 7
+    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (1 - 8) / (12 - 1) = 5 / 11 = 5 * 11 = 7
     7
 
 sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^10, group_order=16)   
@@ -21,7 +21,7 @@ sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_ge
 	f(x_i=15) = x_i*h = 15*8 = 1 (v_i++)
 	f(x_i=1) = x_i*x_i = 1*1 = 1 (u_i*=2, v_i*=2)                                                                    
     x_i, u_i, v_i = [(7, 1, 1), (15, 2, 2), (1, 2, 3), (1, 4, 6)]
-    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (2 - 4) / (6 - 3) = 10
+    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (2 - 4) / (6 - 3) = 14 / 3 = 14 * 11 = 10
     10
 
 sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^11, group_order=16)                                                                        
@@ -42,7 +42,7 @@ sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_ge
 	f(x_i=2) = x_i*g = 2*3 = 6 (u_i++)
 	f(x_i=6) = x_i*h = 6*4 = 7 (v_i++)
     x_i, u_i, v_i = [(12, 1, 1), (14, 1, 2), (8, 2, 2), (7, 3, 2), (15, 6, 4), (9, 6, 5), (2, 6, 6), (6, 7, 6), (7, 7, 7)]
-    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (3 - 7) / (7 - 2) = 12
+    g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (3 - 7) / (7 - 2) = 12 / 5 = 12 * 13 = 12
     12
 """
 
@@ -78,7 +78,7 @@ def dlog_pollard_rho(g, h, group_order, u_0=1, v_0=1, G1 = range(0,BIG,3), G2 = 
 
 			x_i_u_i_v_i.append((next_x, next_u, next_v))
 			print(f"x_i, u_i, v_i = {x_i_u_i_v_i}")
-			print(f"g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = ({u_L} - {u_L_plus_T}) / ({v_L_plus_T} - {v_L}) = {x}")
+			print(f"g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = ({u_L} - {u_L_plus_T}) / ({v_L_plus_T} - {v_L}) = {Zmod(group_order)(u_L - u_L_plus_T)} / {Zmod(group_order)(v_L_plus_T - v_L)} = {Zmod(group_order)(u_L - u_L_plus_T)} * {Zmod(group_order)(v_L_plus_T - v_L)**(-1)} = {x}")
 			return x
 		else:
 			x_i_u_i_v_i.append((next_x, next_u, next_v))
