@@ -5,6 +5,7 @@ sage: Z17 = IntegerModRing(17)
 sage: load("/Users/kendrick/Documents/SS2022/Kryptologie_1_CRYPTO1/Python_Ueb_mit_meinen_Kommentaren/crypto1_my_python/dlog_pollard_rho.py")
 
 sage: dlog_pollard_rho(g=Z13.multiplicative_generator(), h=Z13.multiplicative_generator()^7, group_order=12)
+    x_0 = g^u_0 * h^v_0 = x_0 = 2 * 11 = x_0 = 9
     f(x_i=9) = x_i*h = 8 (v_i++)
     f(x_i=8) = x_i*g = 3 (u_i++)
     f(x_i=3) = x_i*h = 7 (v_i++)
@@ -15,6 +16,7 @@ sage: dlog_pollard_rho(g=Z13.multiplicative_generator(), h=Z13.multiplicative_ge
     7
 
 sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^10, group_order=16)   
+    x_0 = g^u_0 * h^v_0 = x_0 = 3 * 8 = x_0 = 7
     f(x_i=7) = x_i*x_i = 15 (u_i*=2, v_i*=2)
     f(x_i=15) = x_i*h = 1 (v_i++)
     f(x_i=1) = x_i*x_i = 1 (u_i*=2, v_i*=2)                                                                     
@@ -30,6 +32,7 @@ ZeroDivisionError                         Traceback (most recent call last)
 
 
 sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^12, group_order=16)
+    x_0 = g^u_0 * h^v_0 = x_0 = 3 * 4 = x_0 = 12
 	f(x_i=12) = x_i*h = 14 (v_i++)
 	f(x_i=14) = x_i*g = 8 (u_i++)
 	f(x_i=8) = x_i*g = 7 (u_i++)
@@ -61,6 +64,7 @@ BIG = 100000  # (but not too big because we're doing "in" checks!!!)
 
 def dlog_pollard_rho(g, h, group_order, u_0=1, v_0=1, G1 = range(0,BIG,3), G2 = range(1,BIG,3), G3 = range(2,BIG,3)):
 	x_0 = g**u_0 * h**v_0
+	print(f"x_0 = g^u_0 * h^v_0 = x_0 = {g**u_0} * {h**v_0} = x_0 = {g**u_0 * h**v_0}")
 	x_i_u_i_v_i = [(x_0, u_0, v_0)]
 	while True:
 		next_x, next_u, next_v = pollard_f(x_i_u_i_v_i[-1][0], x_i_u_i_v_i[-1][1], x_i_u_i_v_i[-1][2], g=g, h=h, G1=G1, G2=G2, G3=G3)
