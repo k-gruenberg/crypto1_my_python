@@ -63,6 +63,8 @@ def dlog_index_calculus(h, p, Zp = None, g = None, B=50, o=76, n=8000, t=1000):
 	# guess B and compute the factor base
 	#B = 50
 	fb = f_base(B)
+	print(f"Gewählt wurde: B = {B}")
+	print(f"Faktorbasis: fb = [p | p prim, p <= B == {B}] = {fb}")
 
 	# Wir haben B (durch gutes Raten) und die zu B zugehörige Faktorbasis bestimmt, nun
 	# können wir das LGS aufstellen, doch dazu benötigen wir zunächst
@@ -126,6 +128,10 @@ def dlog_index_calculus(h, p, Zp = None, g = None, B=50, o=76, n=8000, t=1000):
 	#   pre_b = [76, 77, 78, 1115, 1116, 1117, 1118, 1119, 1120, 1648, ..., 6212, 6526, 6527, 6528, 6529, 6568, 6867]
 	#   und len(pre_M) == 74.
 
+	print("LGS:")
+	for i in range(0, len(pre_b)):
+		print(f"f_{i+1} = {pre_b[i]} = " + " + ".join([f"{pre_M[i][t]} * dlog_g(p_{t+1})" for t in range(0, len(fb))]))
+
 	R = IntegerModRing(p-1)
 
 	M = Matrix(R, pre_M)
@@ -134,6 +140,8 @@ def dlog_index_calculus(h, p, Zp = None, g = None, B=50, o=76, n=8000, t=1000):
 	# Löse nun das obige besagte LGS, um die diskreten Logarithmen dlog_g(p_i) für alle 1 <= i <= t zu erhalten:
 	## the dlogs of the primes in fb
 	dlogs = M.solve_right(b)
+	print("Lösung des LGS:")
+	print(f"dlog_g(p_j = {fb}) = {dlogs}")
 
 	# x mit h=g^x (g und h gegeben) lässt sich nun wie folgt bestimmen:
 	# (1.) Suche eine Zahl f, sodass h*g^f B-glatt ist.
@@ -151,7 +159,10 @@ def dlog_index_calculus(h, p, Zp = None, g = None, B=50, o=76, n=8000, t=1000):
 	        # h * g^i = p_1^e_1 * ... * p_t^e_t
 	        # x + i = e_1 * dlog(p_1) + ... + e_t * dlog(p_t)
 	        if is_smooth(u, B):
-	            return (sum([t[1]*dlogs[fb.index(t[0])] for t in factor(u)]) - i)%(p-1) 
+	            print(f"Ein f gefunden, sodass h*g^f B-glatt ist: f={i} und h*g^f = {u}")
+	            x = (sum([t[1]*dlogs[fb.index(t[0])] for t in factor(u)]) - i)%(p-1)
+	            print(f"x = dlog_g(h) = -f + sum(e_j * dlog_g(p_j)) = -{i} + sum({[t[1]*dlogs[fb.index(t[0])] for t in factor(u)]}) = {x} (mod {p-1})")
+	            return x
 
 	x = comp_dlog(g,h,t=t)
 
