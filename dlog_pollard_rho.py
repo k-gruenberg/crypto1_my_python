@@ -4,12 +4,20 @@ sage: Z17 = IntegerModRing(17)
 
 sage: load("/Users/kendrick/Documents/SS2022/Kryptologie_1_CRYPTO1/Python_Ueb_mit_meinen_Kommentaren/crypto1_my_python/dlog_pollard_rho.py")
 
-sage: dlog_pollard_rho(g=Z13.multiplicative_generator(), h=Z13.multiplicative_generator()^7, group_order=12)                                                                         
+sage: dlog_pollard_rho(g=Z13.multiplicative_generator(), h=Z13.multiplicative_generator()^7, group_order=12)
+    f(x_i=9) = x_i*h = 8 (v_i++)
+    f(x_i=8) = x_i*g = 3 (u_i++)
+    f(x_i=3) = x_i*h = 7 (v_i++)
+    f(x_i=7) = x_i*x_i = 10 (u_i*=2, v_i*=2)
+    f(x_i=10) = x_i*x_i = 9 (u_i*=2, v_i*=2)                                                                        
     x_i, u_i, v_i = [(9, 1, 1), (8, 1, 2), (3, 2, 2), (7, 2, 3), (10, 4, 6), (9, 8, 12)]
     g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (1 - 8) / (12 - 1) = 7
     7
 
-sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^10, group_order=16)                                                                        
+sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^10, group_order=16)   
+    f(x_i=7) = x_i*x_i = 15 (u_i*=2, v_i*=2)
+    f(x_i=15) = x_i*h = 1 (v_i++)
+    f(x_i=1) = x_i*x_i = 1 (u_i*=2, v_i*=2)                                                                     
     x_i, u_i, v_i = [(7, 1, 1), (15, 2, 2), (1, 2, 3), (1, 4, 6)]
     g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (2 - 4) / (6 - 3) = 10
     10
@@ -21,7 +29,15 @@ ZeroDivisionError                         Traceback (most recent call last)
 => auch nicht für andere Werte von u_0 und v_0 !!!!!
 
 
-sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^12, group_order=16)                                                                        
+sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_generator()^12, group_order=16)
+	f(x_i=12) = x_i*h = 14 (v_i++)
+	f(x_i=14) = x_i*g = 8 (u_i++)
+	f(x_i=8) = x_i*g = 7 (u_i++)
+	f(x_i=7) = x_i*x_i = 15 (u_i*=2, v_i*=2)
+	f(x_i=15) = x_i*h = 9 (v_i++)
+	f(x_i=9) = x_i*h = 2 (v_i++)
+	f(x_i=2) = x_i*g = 6 (u_i++)
+	f(x_i=6) = x_i*h = 7 (v_i++)
     x_i, u_i, v_i = [(12, 1, 1), (14, 1, 2), (8, 2, 2), (7, 3, 2), (15, 6, 4), (9, 6, 5), (2, 6, 6), (6, 7, 6), (7, 7, 7)]
     g^u_L * h^v_k == g^u_L+T * h^v_L+T  =>  x = (u_L - u_L+T) / (v_L+T - v_L) = (3 - 7) / (7 - 2) = 12
     12
@@ -30,10 +46,13 @@ sage: dlog_pollard_rho(g=Z17.multiplicative_generator(), h=Z17.multiplicative_ge
 def pollard_f(x_i, u_i, v_i, g, h, G1, G2, G3): # returns x_i+1, u_i+1, v_i+1
 	#print(f"x_i = {x_i}")
 	if ZZ(x_i) in G1:
+		print(f"f(x_i={x_i}) = x_i*h = {x_i*h} (v_i++)")
 		return x_i*h, u_i, v_i+1
 	elif ZZ(x_i) in G2:
+		print(f"f(x_i={x_i}) = x_i*x_i = {x_i*x_i} (u_i*=2, v_i*=2)")
 		return x_i*x_i, 2*u_i, 2*v_i  # i.e. x_i^2
 	elif ZZ(x_i) in G3:
+		print(f"f(x_i={x_i}) = x_i*g = {x_i*g} (u_i++)")
 		return x_i*g, u_i+1, v_i
 	else:
 		print("Error: x_i is neither in G1 nor in G2 nor in G3!")
