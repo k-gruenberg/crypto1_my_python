@@ -26,13 +26,13 @@ def my_sqrt(u, p):
 	[1] Tonelli–Shanks algo: Found least i such that t^2^i = 15^2^i = 1: i=3
 	[1] Tonelli–Shanks algo: b = c^2^(M-i-1) = 3^2^(4-3-1) = 3
 	[1] Tonelli–Shanks algo: M = i = 3, c = b^2 = 3^2 = 9
-	[1] Tonelli–Shanks algo: t = t*b^2 = 15 * 9 = 16
+	[1] Tonelli–Shanks algo: t = t*b^2 = 15 * 3^2 = 15 * 9 = 16
 	[1] Tonelli–Shanks algo: R = R*b = 15 * 3 = 11
 
 	[2] Tonelli–Shanks algo: Found least i such that t^2^i = 16^2^i = 1: i=1
 	[2] Tonelli–Shanks algo: b = c^2^(M-i-1) = 9^2^(3-1-1) = 13
 	[2] Tonelli–Shanks algo: M = i = 1, c = b^2 = 13^2 = 16
-	[2] Tonelli–Shanks algo: t = t*b^2 = 16 * 16 = 1
+	[2] Tonelli–Shanks algo: t = t*b^2 = 16 * 13^2 = 16 * 16 = 1
 	[2] Tonelli–Shanks algo: R = R*b = 11 * 13 = 7
 
 	[3] Tonelli–Shanks algo: If t = 1, return r = R = 7
